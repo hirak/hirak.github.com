@@ -22,7 +22,7 @@ body { margin:0;padding:0 }
 }
 h1, h2 {
     font-family: 'Antic', sans-serif;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 h1 {
     background-image: linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
@@ -56,12 +56,17 @@ _CSS_
         ->_
         ->h1_('php-XML_Builder')
         ->div(array('id'=>'wrapper'))
-            ->div(array('style'=>'position:relative;height:100%'))
-                ->div(array($dt=>"$dl.TabContainer",'style'=>'position:static; width:100%; height:100%'))
+            ->div(array('style'=>'position:relative;'))
+                ->div(array($dt=>"$dl.TabContainer",'doLayout'=>'false','style'=>'position:static;'))
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'Introduction'))
 
                         ->h2_('About')
                         ->p_('PHPでXMLを組み立てるためのライブラリです。')
+                        ->p
+                            ->_text('なお、このページ自体もXML_Builderを使って書いています。ソースは')
+                            ->a_(array('href'=>'src/index.html.php'),'src/index.html.php')
+                            ->_text('から参照できます。')
+                        ->_
                         ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
     <?php
     require_once 'XML/Builder.php';
@@ -91,11 +96,7 @@ _PHP_
                             ->_
                             ->li
                                 ->strong_('DOMとXMLWriterをサポート')
-                                ->_text(': バックエンドとして、')
-                                ->em_('高機能なDOM')
-                                ->_text('・')
-                                ->em_('高速なXMLWriter')
-                                ->_text('のいずれかを選択できます。どちらを選んでも同じインターフェースで書けます。')
+                                ->_text(': バックエンドとして、高機能なDOM・高速なXMLWriterのいずれかを選択できます。どちらを選んでも同じインターフェースで書けます。')
                             ->_
                             ->li
                                 ->strong_('Arrayサポート')
@@ -122,25 +123,116 @@ _TEXT_
                     ->_
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'API Reference'))
                         ->h2_('XML_Builder::factory()')
-                        ->p_('XML_Builderオブジェクトを生成します。')
+                        ->p_('XML_Builderオブジェクトを生成します。引数は配列で渡します。')
+                        ->table(array('border'=>1))
+                            ->caption_('オプション説明')
+                            ->thead
+                                ->tr
+                                    ->th_('オプション名')
+                                    ->th_('デフォルト')
+                                    ->th_('説明')
+                                ->_
+                            ->_
+                            ->tbody
+                                ->tr
+                                    ->td_('class')
+                                    ->td_('dom')
+                                    ->td_('バックエンドを選択します。dom/xmlwriter/arrayのいずれかを指定します。')
+                                ->_
+                                ->tr
+                                    ->td_('formatOutput')
+                                    ->td_('true')
+                                    ->td_('出力を成形するかどうか')
+                                ->_
+                                ->tr
+                                    ->td_('version')
+                                    ->td_('1.0')
+                                    ->td_('出力するXMLのバージョン。<?xml version="1.0"?>のversionです。')
+                                ->_
+                                ->tr
+                                    ->td_('encoding')
+                                    ->td_('UTF-8')
+                                    ->td_('出力するXMLの文字コード。<?xml version="1.0" encoding="UTF-8"?>のencodingです。')
+                                ->_
+                                ->tr
+                                    ->td_('doctype')
+                                    ->td_('null')
+                                    ->td_('DOCTYPE宣言。array(\'HTML\',null,null)などのように3要素の配列で渡します。よく使いそうなHTML関係のものはXML_Builderクラスのstatic変数として定義してあります。')
+                                ->_
+                                ->tr
+                                    ->td_('writeto')
+                                    ->td_(':memory:')
+                                    ->td_('XMLWriter専用。XMLWriterが書きだす先を指定します。ファイル名を書けばそのファイルに直接書き込みますし、php://outputを指定すれば標準出力にどんどん書きだしていきます。')
+                                ->_
+                            ->_
+                        ->_
+
+                        ->p_('このXML_Builder::factory()でビルダーオブジェクトを作り、以下のメソッドをメソッドチェーンでつなげて書いていきます。')
                         ->hr_
+
                         ->h2_('Methods')
+                        ->ul
+                            ->li_('引数がない場合は()を省略することができます。')
+                            ->li_('特に理由がなければすべてのpublicメソッドは"xml"を接頭辞に持ちます。xmlから始まる要素はXMLの予約語となっているため、そうそう作ることはないだろうということで決定しました。')
+                        ->_
                         ->h3_('->xmlElem($name), ->$name')
-                        ->p_('要素を作成します。')
+                        ->p_('$nameという名前の要素を作成して現在編集中の要素に追加します。戻り値は作成した要素になります。')
+                        ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
+->root
+
+/*
+<root>
+*/
+_PHP_
+                        )->_
+                        ->p_('名前空間付きの要素や、記号を含む要素の場合は{\'〜\'}で囲う必要があります。xmlElem()なら気にしなくても動きます。')
+                        ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
+->{'atom:feed'}
+
+/*
+<atom:feed>
+*/
+_PHP_
+                        )->_
                         ->hr_
+
                         ->h3_('->xmlEnd(), ->_')
+                        ->p_('現在の要素の編集を終え、親の要素に戻ります。')
+                        ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
+->root
+->_
+
+/*
+<root/>
+*/
+_PHP_
+                        )->_
+                        ->hr_
+
                         ->h3_('->xmlAttr(), ->_attr()')
+                        ->p_('現在編集中の要素に属性を追加します。')
+                        ->hr_
+
                         ->h3_('->xmlText(), ->_text()')
+                        ->p_('現在編集中の要素にテキストノードを追加します。')
+                        ->hr_
                     ->_
+
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'DOM'))
                         ->h2_('XML_Builder_DOM')
+                        ->p_('ここではDOMバックエンド特有の機能を紹介します。')
                     ->_
+
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'XMLWriter'))
                         ->h2_('XML_Builder_XMLWriter')
+                        ->p_('ここではXMLWriterバックエンド特有の機能を紹介します。')
                     ->_
+
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'Array'))
                         ->h2_('XML_Builder_Array')
+                        ->p_('ここではArrayバックエンド特有の機能を紹介します。')
                     ->_
+
                 ->_
             ->_
         ->_
