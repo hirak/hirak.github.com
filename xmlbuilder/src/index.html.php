@@ -168,6 +168,13 @@ _TEXT_
                         ->_
 
                         ->p_('このXML_Builder::factory()でビルダーオブジェクトを作り、以下のメソッドをメソッドチェーンでつなげて書いていきます。')
+                        ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
+\$builder = XML_Builder::factory(array(
+    'class' => 'dom',
+    'doctype' => XML_Builder::\$HTML4_STRICT,
+));
+_PHP_
+                        )->_
                         ->hr_
 
                         ->h2_('Methods')
@@ -210,11 +217,29 @@ _PHP_
                         ->hr_
 
                         ->h3_('->xmlAttr(), ->_attr()')
-                        ->p_('現在編集中の要素に属性を追加します。')
+                        ->p_('現在編集中の要素に属性を追加します。配列で渡します。')
+                        ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
+->root
+    ->_attr(array('moge'=>'fuga','noge'=>'guga'))
+->_
+/*
+<root moge="fuga" noge="guga"/>
+*/
+_PHP_
+                        )->_
                         ->hr_
 
                         ->h3_('->xmlText(), ->_text()')
                         ->p_('現在編集中の要素にテキストノードを追加します。')
+                        ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
+->root
+    ->_text('hogehoge')
+->_
+/*
+<root>hogehoge</root>
+ */
+_PHP_
+                        )->_
                         ->hr_
                     ->_
 

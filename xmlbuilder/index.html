@@ -116,6 +116,10 @@ h1 {
 </tbody>
 </table>
 <p>このXML_Builder::factory()でビルダーオブジェクトを作り、以下のメソッドをメソッドチェーンでつなげて書いていきます。</p>
+<pre><code data-dojo-type="dojox.highlight.Code">$builder = XML_Builder::factory(array(
+    'class' =&gt; 'dom',
+    'doctype' =&gt; XML_Builder::$HTML4_STRICT,
+));</code></pre>
 <hr>
 <h2>Methods</h2>
 <ul>
@@ -146,10 +150,22 @@ h1 {
 */</code></pre>
 <hr>
 <h3>-&gt;xmlAttr(), -&gt;_attr()</h3>
-<p>現在編集中の要素に属性を追加します。</p>
+<p>現在編集中の要素に属性を追加します。配列で渡します。</p>
+<pre><code data-dojo-type="dojox.highlight.Code">-&gt;root
+    -&gt;_attr(array('moge'=&gt;'fuga','noge'=&gt;'guga'))
+-&gt;_
+/*
+&lt;root moge="fuga" noge="guga"/&gt;
+*/</code></pre>
 <hr>
 <h3>-&gt;xmlText(), -&gt;_text()</h3>
 <p>現在編集中の要素にテキストノードを追加します。</p>
+<pre><code data-dojo-type="dojox.highlight.Code">-&gt;root
+    -&gt;_text('hogehoge')
+-&gt;_
+/*
+&lt;root&gt;hogehoge&lt;/root&gt;
+ */</code></pre>
 <hr>
 </div>
 <div data-dojo-type="dijit.layout.ContentPane" title="DOM">
