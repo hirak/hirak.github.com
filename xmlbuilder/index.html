@@ -10,17 +10,18 @@
 #wrapper {
     margin:0 1em;
 }
-h1, h2 {
+h1,h2 {
     font-family: 'Antic', sans-serif;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 h1 {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
     background-image: linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
     background-image: -o-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
     background-image: -moz-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
     background-image: -webkit-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
     background-image: -ms-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
 
+    background-color: #033;
     background-image: -webkit-gradient(
         linear,
         left bottom,
@@ -34,27 +35,21 @@ h1 {
     box-shadow: 0 1px 3px 3px #000;
 }</style>
 <body class="claro">
-<a href="http://github.com/hirak/php-XML_Builder"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a><h1>php-XML_Builder</h1>
+<a href="http://github.com/hirak/php-XML_Builder"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a><h1>php-XML_Builder</h1>
 <div id="wrapper"><div style="position:relative;"><div data-dojo-type="dijit.layout.TabContainer" doLayout="false" style="position:static;">
 <div data-dojo-type="dijit.layout.ContentPane" title="Introduction">
 <h2>About</h2>
 <p>PHPでXMLを組み立てるためのライブラリです。</p>
-<p>なお、このページ自体もXML_Builderを使って書いています。ソースは<a href="src/index.html.php">src/index.html.php</a>から参照できます。</p>
-<pre><code data-dojo-type="dojox.highlight.Code">    &lt;?php
+<pre><code data-dojo-type="dojox.highlight.Code" class="javascript">    &lt;?php
     require_once 'XML/Builder.php';
     echo XML_Builder::factory()
     -&gt;root
         -&gt;hello_('world')
-    -&gt;_
-    ;
-
-    /*
-    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    -&gt;_;</code></pre>
+<pre><code data-dojo-type="dojox.highlight.Code" class="xml">    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
     &lt;root&gt;
       &lt;hello&gt;world&lt;/hello&gt;
-    &lt;/root&gt;
-     */
-</code></pre>
+    &lt;/root&gt;</code></pre>
 <ul>
 <li>
 <strong>簡潔</strong>: とにかく短く書けます。</li>
@@ -71,6 +66,7 @@ h1 {
 <pre><code>    # pear channel-discover openpear.org
     # pear install openpear/XML_Builder</code></pre>
 <p>pearコマンドが使えない環境では、<a href="https://github.com/hirak/php-XML_Builder">github</a>からソースをダウンロードして、include_pathにlibの中身をコピーすればOK。</p>
+<p>なお、このページ自体もXML_Builderを使って書いています。ソースは<a href="https://github.com/hirak/hirak.github.com/blob/master/xmlbuilder/src/index.html.php">src/index.html.php</a>から参照できます。</p>
 </div>
 <div data-dojo-type="dijit.layout.ContentPane" title="API Reference">
 <h2>XML_Builder::factory()</h2>
@@ -181,12 +177,12 @@ h1 {
 <p>ここではArrayバックエンド特有の機能を紹介します。</p>
 </div>
 </div></div></div>
-<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" type="text/javascript" data-dojo-config="parseOnLoad:true"></script><script type="text/javascript"><!--
-dojo.require("dijit.layout.BorderContainer");
+<script src="assets/dojo/dojo.js" type="text/javascript" data-dojo-config="parseOnLoad:true"></script><script type="text/javascript"><!--
 dojo.require("dijit.layout.TabContainer");
 dojo.require("dijit.layout.ContentPane");
 dojo.require("dojox.highlight");
 dojo.require("dojox.highlight.languages.javascript");
+dojo.require("dojox.highlight.languages.xml");
 --></script>
 </body>
 </head></html>

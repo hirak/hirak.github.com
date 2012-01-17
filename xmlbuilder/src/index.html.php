@@ -12,7 +12,9 @@ XML_Builder::factory(array('doctype'=>XML_Builder::$HTML5))
         ->meta_(array('http-equiv'=>'Content-Type','content'=>'text/html; charset=UTF-8'))
         ->meta_(array('http-equiv'=>'X-UA-Compatible','content'=>'IE=edge,chrome=1'))
         ->title_('php-XML_Builder document')
+        //http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css
         ->link_(array('rel'=>'stylesheet','href'=>'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css'))
+        //http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojox/highlight/resources/highlight.css
         ->link_(array('rel'=>'stylesheet','href'=>'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojox/highlight/resources/highlight.css'))
         ->link_(array('rel'=>'stylesheet','href'=>'http://fonts.googleapis.com/css?family=Antic'))
         ->style(<<<_CSS_
@@ -20,17 +22,18 @@ body { margin:0;padding:0 }
 #wrapper {
     margin:0 1em;
 }
-h1, h2 {
+h1,h2 {
     font-family: 'Antic', sans-serif;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 h1 {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
     background-image: linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
     background-image: -o-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
     background-image: -moz-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
     background-image: -webkit-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
     background-image: -ms-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
 
+    background-color: #033;
     background-image: -webkit-gradient(
         linear,
         left bottom,
@@ -50,7 +53,7 @@ _CSS_
         ->a(array('href'=>'http://github.com/hirak/php-XML_Builder'))
             ->img_(array(
                 'style'=>'position: absolute; top: 0; right: 0; border: 0;',
-                'src'=>'http://assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67',
+                'src'=>'https://a248.e.akamai.net/assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67',
                 'alt'=>'Fork me on GitHub'
             ))
         ->_
@@ -62,27 +65,20 @@ _CSS_
 
                         ->h2_('About')
                         ->p_('PHPでXMLを組み立てるためのライブラリです。')
-                        ->p
-                            ->_text('なお、このページ自体もXML_Builderを使って書いています。ソースは')
-                            ->a_(array('href'=>'src/index.html.php'),'src/index.html.php')
-                            ->_text('から参照できます。')
-                        ->_
-                        ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
+                        ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'javascript'),<<<_PHP_
     <?php
     require_once 'XML/Builder.php';
     echo XML_Builder::factory()
     ->root
         ->hello_('world')
-    ->_
-    ;
-
-    /*
+    ->_;
+_PHP_
+                        )->_
+                        ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'xml'),<<<_PHP_
     <?xml version="1.0" encoding="UTF-8"?>
     <root>
       <hello>world</hello>
     </root>
-     */
-
 _PHP_
                         )->_
                         ->ul
@@ -119,6 +115,11 @@ _TEXT_
                             ->_text('pearコマンドが使えない環境では、')
                             ->a_(array('href'=>'https://github.com/hirak/php-XML_Builder'), 'github')
                             ->_text('からソースをダウンロードして、include_pathにlibの中身をコピーすればOK。')
+                        ->_
+                        ->p
+                            ->_text('なお、このページ自体もXML_Builderを使って書いています。ソースは')
+                            ->a_(array('href'=>'https://github.com/hirak/hirak.github.com/blob/master/xmlbuilder/src/index.html.php'),'src/index.html.php')
+                            ->_text('から参照できます。')
                         ->_
                     ->_
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'API Reference'))
@@ -263,18 +264,19 @@ _PHP_
         ->_
 
         ->script_(array(
-            'src'=>'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js',
+            //'src'=>'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js',
+            'src'=>'assets/dojo/dojo.js',
             'type'=>'text/javascript',
             'data-dojo-config'=>'parseOnLoad:true'
-        ),'')
+        ))
         ->script(array('type'=>'text/javascript'))
             ->_comment(implode(PHP_EOL,array(
                 '',
-                'dojo.require("dijit.layout.BorderContainer");',
                 'dojo.require("dijit.layout.TabContainer");',
                 'dojo.require("dijit.layout.ContentPane");',
                 'dojo.require("dojox.highlight");',
                 'dojo.require("dojox.highlight.languages.javascript");',
+                'dojo.require("dojox.highlight.languages.xml");',
                 '',
             )))
         ->_
