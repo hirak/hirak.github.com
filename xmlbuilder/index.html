@@ -10,7 +10,7 @@
 #wrapper {
     margin:0 1em;
 }
-h1,h2 {
+h1, h2, h3 {
     font-family: 'Antic', sans-serif;
 }
 h1 {
@@ -39,17 +39,22 @@ h1 {
 <div id="wrapper"><div style="position:relative;"><div data-dojo-type="dijit.layout.TabContainer" doLayout="false" style="position:static;">
 <div data-dojo-type="dijit.layout.ContentPane" title="Introduction">
 <h2>About</h2>
+<table border="1"><tr>
+<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">&lt;?php
+require_once 'XML/Builder.php';
+XML_Builder::factory()
+
+-&gt;root
+    -&gt;hello_('world')
+-&gt;_
+
+-&gt;_echo;</code></pre></td>
+<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;root&gt;
+  &lt;hello&gt;world&lt;/hello&gt;
+&lt;/root&gt;</code></pre></td>
+</tr></table>
 <p>PHPでXMLを組み立てるためのライブラリです。</p>
-<pre><code data-dojo-type="dojox.highlight.Code" class="javascript">    &lt;?php
-    require_once 'XML/Builder.php';
-    echo XML_Builder::factory()
-    -&gt;root
-        -&gt;hello_('world')
-    -&gt;_;</code></pre>
-<pre><code data-dojo-type="dojox.highlight.Code" class="xml">    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-    &lt;root&gt;
-      &lt;hello&gt;world&lt;/hello&gt;
-    &lt;/root&gt;</code></pre>
 <ul>
 <li>
 <strong>簡潔</strong>: とにかく短く書けます。</li>
@@ -58,7 +63,7 @@ h1 {
 <li>
 <strong>DOMとXMLWriterをサポート</strong>: バックエンドとして、高機能なDOM・高速なXMLWriterのいずれかを選択できます。どちらを選んでも同じインターフェースで書けます。</li>
 <li>
-<strong>Arrayサポート</strong>: おまけ機能として、同一インターフェースで配列を組み立てる機能があります。</li>
+<strong>Arrayサポート</strong>: おまけ機能として、同一インターフェースで配列を組み立てる機能があります。JSON/XML/PHPSerializeの出し分けが簡単に行えます。</li>
 </ul>
 <hr>
 <h2>Install</h2>
@@ -87,7 +92,7 @@ h1 {
 <tr>
 <td>formatOutput</td>
 <td>true</td>
-<td>出力を成形するかどうか</td>
+<td>出力を整形するかどうか</td>
 </tr>
 <tr>
 <td>version</td>
@@ -106,67 +111,71 @@ h1 {
 </tr>
 <tr>
 <td>writeto</td>
-<td>:memory:</td>
+<td>memory</td>
 <td>XMLWriter専用。XMLWriterが書きだす先を指定します。ファイル名を書けばそのファイルに直接書き込みますし、php://outputを指定すれば標準出力にどんどん書きだしていきます。</td>
 </tr>
 </tbody>
 </table>
 <p>このXML_Builder::factory()でビルダーオブジェクトを作り、以下のメソッドをメソッドチェーンでつなげて書いていきます。</p>
-<pre><code data-dojo-type="dojox.highlight.Code">$builder = XML_Builder::factory(array(
+<table border="1"><tr><td><pre><code data-dojo-type="dojox.highlight.Code" class="php">$builder = XML_Builder::factory(array(
     'class' =&gt; 'dom',
     'doctype' =&gt; XML_Builder::$HTML4_STRICT,
-));</code></pre>
+));</code></pre></td></tr></table>
 <hr>
 <h2>Methods</h2>
 <ul>
 <li>引数がない場合は()を省略することができます。</li>
-<li>特に理由がなければすべてのpublicメソッドは"xml"を接頭辞に持ちます。xmlから始まる要素はXMLの予約語となっているため、そうそう作ることはないだろうということで決定しました。</li>
+<li>「xml」から始まる正式名と、「_」から始まる省略名があります。「xml～」の方がやや高速に動作します。</li>
 </ul>
 <h3>-&gt;xmlElem($name), -&gt;$name</h3>
 <p>$nameという名前の要素を作成して現在編集中の要素に追加します。戻り値は作成した要素になります。</p>
-<pre><code data-dojo-type="dojox.highlight.Code">-&gt;root
-
-/*
-&lt;root&gt;
-*/</code></pre>
-<p>名前空間付きの要素や、記号を含む要素の場合は{'〜'}で囲う必要があります。xmlElem()なら気にしなくても動きます。</p>
-<pre><code data-dojo-type="dojox.highlight.Code">-&gt;{'atom:feed'}
-
-/*
-&lt;atom:feed&gt;
-*/</code></pre>
+<table border="1"><tr>
+<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">//以下はすべて同じ意味
+-&gt;root
+-&gt;root()
+-&gt;xmlElem('root')</code></pre></td>
+<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root&gt;</code></pre></td>
+</tr></table>
+<p>名前空間付きの要素や、記号を含む要素の場合は{'〜'}で囲う必要があります。</p>
+<table border="1"><tr>
+<td><pre><code data-dojo-type="dojox.highlight.Code">//以下はすべて同じ意味
+-&gt;{'atom:feed'}
+-&gt;{'atom:feed'}()
+-&gt;xmlElem('atom:feed')</code></pre></td>
+<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;atom:feed&gt;</code></pre></td>
+</tr></table>
 <hr>
 <h3>-&gt;xmlEnd(), -&gt;_</h3>
 <p>現在の要素の編集を終え、親の要素に戻ります。</p>
-<pre><code data-dojo-type="dojox.highlight.Code">-&gt;root
--&gt;_
-
-/*
-&lt;root/&gt;
-*/</code></pre>
+<pre><code data-dojo-type="dojox.highlight.Code" class="php">-&gt;root
+-&gt;_</code></pre>
+<pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root/&gt;</code></pre>
 <hr>
 <h3>-&gt;xmlAttr(), -&gt;_attr()</h3>
 <p>現在編集中の要素に属性を追加します。配列で渡します。</p>
-<pre><code data-dojo-type="dojox.highlight.Code">-&gt;root
+<pre><code data-dojo-type="dojox.highlight.Code" class="php">-&gt;root
     -&gt;_attr(array('moge'=&gt;'fuga','noge'=&gt;'guga'))
--&gt;_
-/*
-&lt;root moge="fuga" noge="guga"/&gt;
-*/</code></pre>
+-&gt;_</code></pre>
+<pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root moge="fuga" noge="guga"/&gt;</code></pre>
 <hr>
 <h3>-&gt;xmlText(), -&gt;_text()</h3>
 <p>現在編集中の要素にテキストノードを追加します。</p>
-<pre><code data-dojo-type="dojox.highlight.Code">-&gt;root
+<pre><code data-dojo-type="dojox.highlight.Code" class="php">-&gt;root
     -&gt;_text('hogehoge')
--&gt;_
-/*
-&lt;root&gt;hogehoge&lt;/root&gt;
- */</code></pre>
+-&gt;_</code></pre>
+<pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root&gt;hogehoge&lt;/root&gt;</code></pre>
 <hr>
 </div>
 <div data-dojo-type="dijit.layout.ContentPane" title="DOM">
 <h2>XML_Builder_DOM</h2>
 <p>ここではDOMバックエンド特有の機能を紹介します。</p>
+<hr>
+<h2>Additional Properties</h2>
+<h3>-&gt;xmlDom</h3>
+<p>XML_Builderによって構築されたDOMDocumentオブジェクトが格納されています。</p>
+<h2>Additional Methods</h2>
+<h3>-&gt;xmlEcho($type="xml")</h3>
+<p>出力を行います。</p>
 </div>
 <div data-dojo-type="dijit.layout.ContentPane" title="XMLWriter">
 <h2>XML_Builder_XMLWriter</h2>
@@ -181,7 +190,7 @@ h1 {
 dojo.require("dijit.layout.TabContainer");
 dojo.require("dijit.layout.ContentPane");
 dojo.require("dojox.highlight");
-dojo.require("dojox.highlight.languages.javascript");
+dojo.require("dojox.highlight.languages.php");
 dojo.require("dojox.highlight.languages.xml");
 --></script>
 </body>
