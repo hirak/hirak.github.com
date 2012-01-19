@@ -46,6 +46,15 @@ h1 {
     padding: 1em;
     box-shadow: 0 1px 3px 3px #000;
 }
+
+table {
+    border: 1px dotted #000;
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px dotted #000;
+    padding: 0.5em;
+}
 _CSS_
         )
     ->_
@@ -64,7 +73,7 @@ _CSS_
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'Introduction'))
 
                         ->h2_('About')
-                        ->table(array('border'=>1))
+                        ->table
                             ->tr
                                 ->td
                                     ->pre->code_($hl_php, <<<_PHP_
@@ -136,7 +145,7 @@ _TEXT_
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'API Reference'))
                         ->h2_('XML_Builder::factory()')
                         ->p_('XML_Builderオブジェクトを生成します。引数は配列で渡します。')
-                        ->table(array('border'=>1))
+                        ->table
                             ->caption_('オプション説明')
                             ->thead
                                 ->tr
@@ -180,7 +189,7 @@ _TEXT_
                         ->_
 
                         ->p_('このXML_Builder::factory()でビルダーオブジェクトを作り、以下のメソッドをメソッドチェーンでつなげて書いていきます。')
-                        ->table(array('border'=>1))
+                        ->table
                             ->tr
                                 ->td
                                     ->pre->code_($hl_php, <<<_PHP_
@@ -202,10 +211,10 @@ _PHP_
                         ->_
                         ->h3_('->xmlElem($name), ->$name')
                         ->p_('$nameという名前の要素を作成して現在編集中の要素に追加します。戻り値は作成した要素になります。')
-                        ->table(array('border'=>1))
+                        ->table
                             ->tr
                                 ->td
-                                    ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'php'),<<<_PHP_
+                                    ->pre->code_($hl_php,<<<_PHP_
 //以下はすべて同じ意味
 ->root
 ->root()
@@ -214,7 +223,7 @@ _PHP_
                                     )->_
                                 ->_
                                 ->td
-                                    ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'xml'),<<<_XML_
+                                    ->pre->code_($hl_xml,<<<_XML_
 <root>
 _XML_
                                     )->_
@@ -222,10 +231,10 @@ _XML_
                             ->_
                         ->_
                         ->p_('名前空間付きの要素や、記号を含む要素の場合は{\'〜\'}で囲う必要があります。')
-                        ->table(array('border'=>1))
+                        ->table
                             ->tr
                                 ->td
-                                    ->pre->code_(array($dt=>'dojox.highlight.Code'),<<<_PHP_
+                                    ->pre->code_($hl_php,<<<_PHP_
 //以下はすべて同じ意味
 ->{'atom:feed'}
 ->{'atom:feed'}()
@@ -234,7 +243,7 @@ _PHP_
                                     )->_
                                 ->_
                                 ->td
-                                    ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'xml'),<<<_XML_
+                                    ->pre->code_($hl_xml,<<<_XML_
 <atom:feed>
 _XML_
                                     )->_
@@ -245,43 +254,67 @@ _XML_
 
                         ->h3_('->xmlEnd(), ->_')
                         ->p_('現在の要素の編集を終え、親の要素に戻ります。')
-                        ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'php'),<<<_PHP_
+                        ->table
+                            ->tr
+                                ->td
+                                    ->pre->code_($hl_php,<<<_PHP_
 ->root
 ->_
 _PHP_
-                        )->_
-                        ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'xml'),<<<_XML_
+                                    )->_
+                                ->_
+                                ->td
+                                    ->pre->code_($hl_xml,<<<_XML_
 <root/>
 _XML_
-                        )->_
+                                    )->_
+                                ->_
+                            ->_
+                        ->_
                         ->hr_
 
                         ->h3_('->xmlAttr(), ->_attr()')
                         ->p_('現在編集中の要素に属性を追加します。配列で渡します。')
-                        ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'php'),<<<_PHP_
+                        ->table
+                            ->tr
+                                ->td
+                                    ->pre->code_($hl_php,<<<_PHP_
 ->root
     ->_attr(array('moge'=>'fuga','noge'=>'guga'))
 ->_
 _PHP_
-                        )->_
-                        ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'xml'),<<<_XML_
+                                    )->_
+                                ->_
+                                ->td
+                                    ->pre->code_($hl_xml,<<<_XML_
 <root moge="fuga" noge="guga"/>
 _XML_
-                        )->_
+                                    )->_
+                                ->_
+                            ->_
+                        ->_
                         ->hr_
 
                         ->h3_('->xmlText(), ->_text()')
                         ->p_('現在編集中の要素にテキストノードを追加します。')
-                        ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'php'),<<<_PHP_
+                        ->table
+                            ->tr
+                                ->td
+                                    ->pre->code_($hl_php,<<<_PHP_
 ->root
     ->_text('hogehoge')
 ->_
 _PHP_
-                        )->_
-                        ->pre->code_(array($dt=>'dojox.highlight.Code','class'=>'xml'),<<<_XML_
+                                    )->_
+                                ->_
+                                ->td
+                                    ->pre->code_($hl_xml,<<<_XML_
 <root>hogehoge</root>
 _XML_
-                        )->_
+                                    )->_
+                                ->_
+                            ->_
+                        ->_
                         ->hr_
                     ->_
 
