@@ -48,7 +48,7 @@ td, th {
 <div id="wrapper"><div style="position:relative;"><div data-dojo-type="dijit.layout.TabContainer" doLayout="false" style="position:static;">
 <div data-dojo-type="dijit.layout.ContentPane" title="Introduction">
 <h2>About</h2>
-<table border="1"><tr>
+<table><tr>
 <td><pre><code data-dojo-type="dojox.highlight.Code" class="php">&lt;?php
 require_once 'XML/Builder.php';
 XML_Builder::factory()
@@ -85,7 +85,7 @@ XML_Builder::factory()
 <div data-dojo-type="dijit.layout.ContentPane" title="API Reference">
 <h2>XML_Builder::factory()</h2>
 <p>XML_Builderオブジェクトを生成します。引数は配列で渡します。</p>
-<table border="1">
+<table>
 <caption>オプション説明</caption>
 <thead><tr>
 <th>オプション名</th>
@@ -126,7 +126,7 @@ XML_Builder::factory()
 </tbody>
 </table>
 <p>このXML_Builder::factory()でビルダーオブジェクトを作り、以下のメソッドをメソッドチェーンでつなげて書いていきます。</p>
-<table border="1"><tr><td><pre><code data-dojo-type="dojox.highlight.Code" class="php">$builder = XML_Builder::factory(array(
+<table><tr><td><pre><code data-dojo-type="dojox.highlight.Code" class="php">$builder = XML_Builder::factory(array(
     'class' =&gt; 'dom',
     'doctype' =&gt; XML_Builder::$HTML4_STRICT,
 ));</code></pre></td></tr></table>
@@ -138,7 +138,7 @@ XML_Builder::factory()
 </ul>
 <h3>-&gt;xmlElem($name), -&gt;$name</h3>
 <p>$nameという名前の要素を作成して現在編集中の要素に追加します。戻り値は作成した要素になります。</p>
-<table border="1"><tr>
+<table><tr>
 <td><pre><code data-dojo-type="dojox.highlight.Code" class="php">//以下はすべて同じ意味
 -&gt;root
 -&gt;root()
@@ -146,7 +146,7 @@ XML_Builder::factory()
 <td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root&gt;</code></pre></td>
 </tr></table>
 <p>名前空間付きの要素や、記号を含む要素の場合は{'〜'}で囲う必要があります。</p>
-<table border="1"><tr>
+<table><tr>
 <td><pre><code data-dojo-type="dojox.highlight.Code" class="php">//以下はすべて同じ意味
 -&gt;{'atom:feed'}
 -&gt;{'atom:feed'}()
@@ -156,7 +156,7 @@ XML_Builder::factory()
 <hr>
 <h3>-&gt;xmlEnd(), -&gt;_</h3>
 <p>現在の要素の編集を終え、親の要素に戻ります。</p>
-<table border="1"><tr>
+<table><tr>
 <td><pre><code data-dojo-type="dojox.highlight.Code" class="php">-&gt;root
 -&gt;_</code></pre></td>
 <td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root/&gt;</code></pre></td>
@@ -164,7 +164,7 @@ XML_Builder::factory()
 <hr>
 <h3>-&gt;xmlAttr(), -&gt;_attr()</h3>
 <p>現在編集中の要素に属性を追加します。配列で渡します。</p>
-<table border="1"><tr>
+<table><tr>
 <td><pre><code data-dojo-type="dojox.highlight.Code" class="php">-&gt;root
     -&gt;_attr(array('moge'=&gt;'fuga','noge'=&gt;'guga'))
 -&gt;_</code></pre></td>
@@ -180,6 +180,25 @@ XML_Builder::factory()
 <td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root&gt;hogehoge&lt;/root&gt;</code></pre></td>
 </tr></table>
 <hr>
+<h3>-&gt;$name_(array(), "string")</h3>
+<p>xmlElem(), xmlAttr(), xmlText(), xmlEnd()の組み合わせには省略記法が用意されています。</p>
+<p>"_"で終わるように要素名を書くと、その要素の編集を終了します。-&gt;xmlEnd()をすぐに呼んだのと同じ効果です。</p>
+<p>属性や単純なテキストノードであれば、要素の引数として渡すことでも追加できます。</p>
+<table><tr>
+<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">//--同じ意味-----
+-&gt;root
+    -&gt;_attr(array('aaa'=&gt;'bbb'))
+    -&gt;_text('hogehoge')
+-&gt;_
+//--------
+-&gt;root_(array('aaa'=&gt;'bbb'), 'hogehoge')
+
+//--混ざっていてもOK------
+-&gt;root(array('aaa'=&gt;'bbb'))
+    -&gt;_text('hogehoge')
+-&gt;_</code></pre></td>
+<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root aaa="bbb"&gt;hogehoge&lt;/root&gt;</code></pre></td>
+</tr></table>
 </div>
 <div data-dojo-type="dijit.layout.ContentPane" title="DOM">
 <h2>XML_Builder_DOM</h2>
@@ -190,15 +209,23 @@ XML_Builder::factory()
 <p>XML_Builderによって構築されたDOMDocumentオブジェクトが格納されています。</p>
 <h2>Additional Methods</h2>
 <h3>-&gt;xmlEcho($type="xml")</h3>
-<p>出力を行います。</p>
+<p>出力を行います。引数にhtmlという文字列を渡すと、DOMによるHTML出力を試みます。</p>
 </div>
 <div data-dojo-type="dijit.layout.ContentPane" title="XMLWriter">
 <h2>XML_Builder_XMLWriter</h2>
 <p>ここではXMLWriterバックエンド特有の機能を紹介します。</p>
+<hr>
+<h2>Additional Properties</h2>
+<h3>-&gt;xmlWriter</h3>
+<p>XMLWriterオブジェクトが格納されています。</p>
 </div>
 <div data-dojo-type="dijit.layout.ContentPane" title="Array">
 <h2>XML_Builder_Array</h2>
 <p>ここではArrayバックエンド特有の機能を紹介します。</p>
+<hr>
+<h2>Additional Properties</h2>
+<h3>-&gt;xmlArray</h3>
+<p>構築された入れ子の配列が格納されています。</p>
 </div>
 </div></div></div>
 <script src="assets/dojo/dojo.js" type="text/javascript" data-dojo-config="parseOnLoad:true"></script><script type="text/javascript"><!--

@@ -316,6 +316,38 @@ _XML_
                             ->_
                         ->_
                         ->hr_
+
+                        ->h3_('->$name_(array(), "string")')
+                        ->p_('xmlElem(), xmlAttr(), xmlText(), xmlEnd()の組み合わせには省略記法が用意されています。')
+                        ->p_('"_"で終わるように要素名を書くと、その要素の編集を終了します。->xmlEnd()をすぐに呼んだのと同じ効果です。')
+                        ->p_('属性や単純なテキストノードであれば、要素の引数として渡すことでも追加できます。')
+                        ->table
+                            ->tr
+                                ->td
+                                    ->pre->code_($hl_php,<<<_PHP_
+//--同じ意味-----
+->root
+    ->_attr(array('aaa'=>'bbb'))
+    ->_text('hogehoge')
+->_
+//--------
+->root_(array('aaa'=>'bbb'), 'hogehoge')
+
+//--混ざっていてもOK------
+->root(array('aaa'=>'bbb'))
+    ->_text('hogehoge')
+->_
+_PHP_
+                                    )->_
+                                ->_
+                                ->td
+                                    ->pre->code_($hl_xml,<<<_XML_
+<root aaa="bbb">hogehoge</root>
+_XML_
+                                    )->_
+                                ->_
+                            ->_
+                        ->_
                     ->_
 
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'DOM'))
@@ -329,17 +361,27 @@ _XML_
 
                         ->h2_('Additional Methods')
                         ->h3_('->xmlEcho($type="xml")')
-                        ->p_('出力を行います。')
+                        ->p_('出力を行います。引数にhtmlという文字列を渡すと、DOMによるHTML出力を試みます。')
                     ->_
 
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'XMLWriter'))
                         ->h2_('XML_Builder_XMLWriter')
                         ->p_('ここではXMLWriterバックエンド特有の機能を紹介します。')
+                        ->hr_
+
+                        ->h2_('Additional Properties')
+                        ->h3_('->xmlWriter')
+                        ->p_('XMLWriterオブジェクトが格納されています。')
                     ->_
 
                     ->div(array($dt=>"$dl.ContentPane", 'title'=>'Array'))
                         ->h2_('XML_Builder_Array')
                         ->p_('ここではArrayバックエンド特有の機能を紹介します。')
+                        ->hr_
+
+                        ->h2_('Additional Properties')
+                        ->h3_('->xmlArray')
+                        ->p_('構築された入れ子の配列が格納されています。')
                     ->_
 
                 ->_
