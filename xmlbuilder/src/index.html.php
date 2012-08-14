@@ -59,7 +59,7 @@ _CSS_
         )
     ->_
     ->body(array('class'=>'claro'))
-        ->a(array('href'=>'http://github.com/hirak/php-XML_Builder'))
+        ->a(array('href'=>'https://github.com/hirak/php-XML_Builder'))
             ->img_(array(
                 'style'=>'position: absolute; top: 0; right: 0; border: 0;',
                 'src'=>'https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png',
@@ -184,6 +184,11 @@ _TEXT_
                                     ->td_('writeto')
                                     ->td_('memory')
                                     ->td_('XMLWriter専用。XMLWriterが書きだす先を指定します。ファイル名を書けばそのファイルに直接書き込みますし、php://outputを指定すれば標準出力にどんどん書きだしていきます。')
+                                ->_
+                                ->tr
+                                    ->td_('serializer')
+                                    ->td_('var_export')
+                                    ->td_('Array専用。->_echoしたときに適用するcallbackを指定します。ex) json_encode, yaml_emit, XML_Builder::json, serialize')
                                 ->_
                             ->_
                         ->_
