@@ -1,124 +1,120 @@
 <?php
 require_once 'XML/Builder.php';
 
-$dt = 'data-dojo-type';
-$dp = 'data-dojo-props';
-$dl = 'dijit.layout';
-$hl_php = array($dt=>'dojox.highlight.Code','class'=>'php');
-$hl_xml = array($dt=>'dojox.highlight.Code','class'=>'xml');
+$pretty = array('class'=>'prettyprint');
+$prettyphp = array('class'=>'prettyprint language-php');
+$prettyxml = array('class'=>'prettyprint language-xml');
 
 XML_Builder::factory(array('doctype'=>XML_Builder::$HTML5))
 
-->html
-    ->head
-        ->meta_(array('http-equiv'=>'Content-Type','content'=>'text/html; charset=UTF-8'))
-        ->meta_(array('http-equiv'=>'X-UA-Compatible','content'=>'IE=edge,chrome=1'))
-        ->title_('php-XML_Builder document')
-        ->link_(array('rel'=>'stylesheet','href'=>'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css'))
-        ->link_(array('rel'=>'stylesheet','href'=>'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojox/highlight/resources/highlight.css'))
-        ->link_(array('rel'=>'stylesheet','href'=>'http://fonts.googleapis.com/css?family=Antic'))
-        ->style(<<<_CSS_
-body { margin:0;padding:0 }
-#wrapper {
-    margin:0 1em;
-}
-h1, h2, h3 {
-    font-family: 'Antic', sans-serif;
-}
-h1 {
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-    background-image: linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-    background-image: -o-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-    background-image: -moz-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-    background-image: -webkit-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-    background-image: -ms-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-
-    background-color: #033;
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0, rgb(0,26,22)),
-        color-stop(0.88, rgb(21,84,94))
-    );
-    color: white;
-    margin:0 0 10px 0;
-    padding: 1em;
-    box-shadow: 0 1px 3px 3px #000;
-}
-
-table {
-    border: 1px dotted #000;
-    border-collapse: collapse;
-}
-td, th {
-    border: 1px dotted #000;
-    padding: 0.5em;
-}
-_CSS_
-        )
+->html(array('lang'=>'ja'))
+  ->head
+    ->meta_(array('http-equiv'=>'Content-Type','content'=>'text/html; charset=UTF-8'))
+    ->meta_(array('charset'=>'UTF-8'))
+    ->meta_(array('http-equiv'=>'X-UA-Compatible','content'=>'IE=edge,chrome=1'))
+    ->_comment('[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]')
+    ->title_('php-XML_Builder document')
+    ->link_(array('rel'=>'stylesheet','href'=>'assets/bootstrap.min.css'))
+    ->link_(array('rel'=>'stylesheet','href'=>'assets/prettify.css'))
+  ->_
+  ->body(array('style'=>'padding-top:90px;'))
+    ->a(array('href'=>'https://github.com/hirak/php-XML_Builder'))
+      ->img_(array(
+       'style'=>'position: fixed; top: 0; right: 0; border: 0; z-index:2000;',
+       'src'=>'https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png',
+       'alt'=>'Fork me on GitHub'
+      ))
     ->_
-    ->body(array('class'=>'claro'))
-        ->a(array('href'=>'https://github.com/hirak/php-XML_Builder'))
-            ->img_(array(
-                'style'=>'position: absolute; top: 0; right: 0; border: 0;',
-                'src'=>'https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png',
-                'alt'=>'Fork me on GitHub'
-            ))
-        ->_
-        ->h1_('php-XML_Builder')
-        ->div(array('id'=>'wrapper'))
-            ->div(array('style'=>'position:relative;'))
-                ->div(array($dt=>"$dl.TabContainer",'doLayout'=>'false','style'=>'position:static;'))
-                    ->div(array($dt=>"$dl.ContentPane", 'title'=>'Introduction'))
 
-                        ->h2_('About')
-                        ->table
-                            ->tr
-                                ->td
-                                    ->pre->code_($hl_php, <<<_PHP_
+    ->div(array('class'=>'navbar navbar-fixed-top'))
+      ->div(array('class'=>'navbar-inner'))
+        ->nav(array('class'=>'container'))
+          ->h1_(array('class'=>'brand'), 'XML Builder')
+          ->ul(array('class'=>'nav'))
+            ->li->a_(array('href'=>'#'),'Introduction')->_
+            ->li->a_(array('href'=>'#'),'Grammer')->_
+            ->li->a_(array('href'=>'#'),'Backends')->_
+            ->li->a_(array('href'=>'#'),'XML ⇔ Array')->_
+          ->_
+        ->_
+      ->_
+    ->_
+
+    ->div(array('class'=>'container'))
+      ->header(array('class'=>'hero-unit'))
+        ->img_(array('src'=>'assets/xml-builder-logo.png','style'=>'display:block;float:right;margin-top:-25px;'))
+        ->h1_('php-XML_Builder')
+        ->p_('Most simple DSL for DOM / XMLWriter @ PHP')
+        ->a_(array('class'=>'btn btn-primary btn-large', 'href'=>'#'), 'Download')
+        ->_text(' ')
+        ->a_(array('class'=>'btn btn-large', 'href'=>'#'), 'Source Code')
+      ->_
+
+      ->section(array('id'=>'introduction'))
+        ->div(array('class'=>'page-header'))
+          ->h1('Introduction ')
+            ->small_('about XML_Builder')
+          ->_
+        ->_
+
+        ->div(array('class'=>'row'))
+          ->div(array('class'=>'span5'))
+            ->pre_($pretty, <<<_PHP_
 <?php
 require_once 'XML/Builder.php';
-XML_Builder::factory()
-
+echo XML_Builder::factory()
 ->root
     ->hello_('world')
-->_
-
-->_echo;
+->_;
 _PHP_
-                                    )->_
-                                ->_
-                                ->td
-                                    ->pre->code_($hl_xml, <<<_XML_
+            )
+          ->_
+          ->div(array('class'=>'span2', 'style'=>'text-align:center; font-size:74px'))
+            ->br_
+            ->br_
+            ->_text('=')
+          ->_
+          ->div(array('class'=>'span5'))
+            ->pre_($pretty, <<<_XML_
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <hello>world</hello>
 </root>
 _XML_
-                                    )->_
-                                ->_
-                            ->_
-                        ->_
-                        ->p_('PHPでXMLを組み立てるためのライブラリです。')
-                        ->ul
-                            ->li
-                                ->strong_('簡潔')
-                                ->_text(': とにかく短く書けます。')
-                            ->_
-                            ->li
-                                ->strong_('安全')
-                                ->_text(': DOMやXMLWriterといった実績のあるライブラリのラッパーとして動作します。そのためXSSのような不具合が原理的に発生しません。')
-                            ->_
-                            ->li
-                                ->strong_('DOMとXMLWriterをサポート')
-                                ->_text(': バックエンドとして、高機能なDOM・高速なXMLWriterのいずれかを選択できます。どちらを選んでも同じインターフェースで書けます。')
-                            ->_
-                            ->li
-                                ->strong_('Arrayサポート')
-                                ->_text(': おまけ機能として、同一インターフェースで配列を組み立てる機能があります。JSON/XML/PHPSerializeの出し分けが簡単に行えます。')
-                            ->_
-                        ->_
+            )
+          ->_
+        ->_
+        ->p_('PHPでXMLを組み立てるためのライブラリです。')
+        ->div(array('class'=>'row'))
+          ->div(array('class'=>'span4'))
+            ->h2_('Feature')
+            ->dl
+              ->dt_('Easy')
+              ->dd_('とにかく短く書けます。')
+              ->dt_('Safe')
+              ->dd_('DOMやXMLWriterといった実績のあるライブラリのラッパーとして動作します。そのためXSSのような不具合が原理的に発生しません。')
+              ->dt_('DOM and XMLWriter supported')
+              ->dd_('バックエンドとして、高機能なDOM・高速なXMLWriterのいずれかを選択できます。どちらを選んでも同じインターフェースで書けます。')
+              ->dt_('to Array')
+              ->dd_('おまけ機能として、同一インターフェースで配列を組み立てる機能があります。XML/JSON/YAML/PHPSerializeの出し分けが簡単に行えます。')
+            ->_
+          ->_
+
+          ->div(array('class'=>'span4'))
+            ->p_(array('style'=>'background-color:black'),'abc')
+          ->_
+
+          ->div(array('class'=>'span4'))
+            ->p_(array('style'=>'background-color:black'),'abc')
+          ->_
+        ->_
+      ->_ //section
+
+      ->div(array('id'=>'wrapper'))
+            ->div
+                ->div
+                    ->div
+
                         ->hr_
                         ->h2_('Install')
                         ->p
@@ -126,11 +122,11 @@ _XML_
                             ->a_(array('href'=>'http://openpear.org/package/XML_Builder'),'Openpear')
                             ->_text('に登録してあるため、pearコマンドで簡単にインストールできます。')
                         ->_
-                        ->pre->code_(<<<_TEXT_
+                        ->pre_(<<<_TEXT_
     # pear channel-discover openpear.org
     # pear install openpear/XML_Builder
 _TEXT_
-                        )->_
+                        )
                         ->p
                             ->_text('pearコマンドが使えない環境では、')
                             ->a_(array('href'=>'https://github.com/hirak/php-XML_Builder'), 'github')
@@ -142,7 +138,7 @@ _TEXT_
                             ->_text('から参照できます。')
                         ->_
                     ->_
-                    ->div(array($dt=>"$dl.ContentPane", 'title'=>'API Reference'))
+                    ->div
                         ->h2_('XML_Builder::factory()')
                         ->p_('XML_Builderオブジェクトを生成します。引数は配列で渡します。')
                         ->table
@@ -197,13 +193,13 @@ _TEXT_
                         ->table
                             ->tr
                                 ->td
-                                    ->pre->code_($hl_php, <<<_PHP_
-\$builder = XML_Builder::factory(array(
+                                    ->pre_($pretty, <<<'_PHP_'
+$builder = XML_Builder::factory(array(
     'class' => 'dom',
-    'doctype' => XML_Builder::\$HTML4_STRICT,
+    'doctype' => XML_Builder::$HTML4_STRICT,
 ));
 _PHP_
-                                    )->_
+                                    )
                                 ->_
                             ->_
                         ->_
@@ -219,19 +215,19 @@ _PHP_
                         ->table
                             ->tr
                                 ->td
-                                    ->pre->code_($hl_php,<<<_PHP_
+                                    ->pre_($pretty,<<<'_PHP_'
 //以下はすべて同じ意味
 ->root
 ->root()
 ->xmlElem('root')
 _PHP_
-                                    )->_
+                                    )
                                 ->_
                                 ->td
-                                    ->pre->code_($hl_xml,<<<_XML_
+                                    ->pre_($pretty,<<<'_XML_'
 <root>
 _XML_
-                                    )->_
+                                    )
                                 ->_
                             ->_
                         ->_
@@ -239,19 +235,19 @@ _XML_
                         ->table
                             ->tr
                                 ->td
-                                    ->pre->code_($hl_php,<<<_PHP_
+                                    ->pre_($pretty,<<<'_PHP_'
 //以下はすべて同じ意味
 ->{'atom:feed'}
 ->{'atom:feed'}()
 ->xmlElem('atom:feed')
 _PHP_
-                                    )->_
+                                    )
                                 ->_
                                 ->td
-                                    ->pre->code_($hl_xml,<<<_XML_
+                                    ->pre_($pretty,<<<'_XML_'
 <atom:feed>
 _XML_
-                                    )->_
+                                    )
                                 ->_
                             ->_
                         ->_
@@ -262,17 +258,17 @@ _XML_
                         ->table
                             ->tr
                                 ->td
-                                    ->pre->code_($hl_php,<<<_PHP_
+                                    ->pre_($pretty,<<<'_PHP_'
 ->root
 ->_
 _PHP_
-                                    )->_
+                                    )
                                 ->_
                                 ->td
-                                    ->pre->code_($hl_xml,<<<_XML_
+                                    ->pre_($pretty,<<<'_XML_'
 <root/>
 _XML_
-                                    )->_
+                                    )
                                 ->_
                             ->_
                         ->_
@@ -283,18 +279,18 @@ _XML_
                         ->table
                             ->tr
                                 ->td
-                                    ->pre->code_($hl_php,<<<_PHP_
+                                    ->pre_($pretty,<<<'_PHP_'
 ->root
     ->_attr(array('moge'=>'fuga','noge'=>'guga'))
 ->_
 _PHP_
-                                    )->_
+                                    )
                                 ->_
                                 ->td
-                                    ->pre->code_($hl_xml,<<<_XML_
+                                    ->pre_($pretty,<<<'_XML_'
 <root moge="fuga" noge="guga"/>
 _XML_
-                                    )->_
+                                    )
                                 ->_
                             ->_
                         ->_
@@ -305,18 +301,18 @@ _XML_
                         ->table
                             ->tr
                                 ->td
-                                    ->pre->code_($hl_php,<<<_PHP_
+                                    ->pre_($pretty,<<<'_PHP_'
 ->root
     ->_text('hogehoge')
 ->_
 _PHP_
-                                    )->_
+                                    )
                                 ->_
                                 ->td
-                                    ->pre->code_($hl_xml,<<<_XML_
+                                    ->pre_($pretty,<<<'_XML_'
 <root>hogehoge</root>
 _XML_
-                                    )->_
+                                    )
                                 ->_
                             ->_
                         ->_
@@ -329,7 +325,7 @@ _XML_
                         ->table
                             ->tr
                                 ->td
-                                    ->pre->code_($hl_php,<<<_PHP_
+                                    ->pre_($pretty,<<<'_PHP_'
 //--同じ意味-----
 ->root
     ->_attr(array('aaa'=>'bbb'))
@@ -343,19 +339,19 @@ _XML_
     ->_text('hogehoge')
 ->_
 _PHP_
-                                    )->_
+                                    )
                                 ->_
                                 ->td
-                                    ->pre->code_($hl_xml,<<<_XML_
+                                    ->pre_($pretty,<<<'_XML_'
 <root aaa="bbb">hogehoge</root>
 _XML_
-                                    )->_
+                                    )
                                 ->_
                             ->_
                         ->_
                     ->_
 
-                    ->div(array($dt=>"$dl.ContentPane", 'title'=>'DOM'))
+                    ->div
                         ->h2_('XML_Builder_DOM')
                         ->p_('ここではDOMバックエンド特有の機能を紹介します。')
                         ->hr_
@@ -369,7 +365,7 @@ _XML_
                         ->p_('出力を行います。引数にhtmlという文字列を渡すと、DOMによるHTML出力を試みます。')
                     ->_
 
-                    ->div(array($dt=>"$dl.ContentPane", 'title'=>'XMLWriter'))
+                    ->div
                         ->h2_('XML_Builder_XMLWriter')
                         ->p_('ここではXMLWriterバックエンド特有の機能を紹介します。')
                         ->hr_
@@ -379,7 +375,7 @@ _XML_
                         ->p_('XMLWriterオブジェクトが格納されています。')
                     ->_
 
-                    ->div(array($dt=>"$dl.ContentPane", 'title'=>'Array'))
+                    ->div()
                         ->h2_('XML_Builder_Array')
                         ->p_('ここではArrayバックエンド特有の機能を紹介します。')
                         ->hr_
@@ -392,24 +388,13 @@ _XML_
                 ->_
             ->_
         ->_
-
-        ->script_(array(
-            //'src'=>'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js',
-            'src'=>'assets/dojo/dojo.js',
-            'type'=>'text/javascript',
-            'data-dojo-config'=>'parseOnLoad:true'
-        ))
-        ->script(array('type'=>'text/javascript'))
-            ->_comment(implode(PHP_EOL,array(
-                '',
-                'dojo.require("dijit.layout.TabContainer");',
-                'dojo.require("dijit.layout.ContentPane");',
-                'dojo.require("dojox.highlight");',
-                'dojo.require("dojox.highlight.languages.php");',
-                'dojo.require("dojox.highlight.languages.xml");',
-                '',
-            )))
         ->_
+
+        ->script_(array('src'=>'assets/jquery-1.8.0.min.js'))
+        ->script_(array('src'=>'assets/prettify.js'))
+        ->script_(array('src'=>'assets/bootstrap-scrollspy.js'))
+        ->script_(array('src'=>'assets/bootstrap-dropdown.js'))
+        ->script_('prettyPrint()')
     ->_
 ->_
 

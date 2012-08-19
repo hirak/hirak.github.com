@@ -1,88 +1,68 @@
 <!DOCTYPE HTML>
-<html><head>
+<html lang="ja">
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>php-XML_Builder document</title>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css">
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojox/highlight/resources/highlight.css">
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Antic">
-<style>body { margin:0;padding:0 }
-#wrapper {
-    margin:0 1em;
-}
-h1, h2, h3 {
-    font-family: 'Antic', sans-serif;
-}
-h1 {
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-    background-image: linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-    background-image: -o-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-    background-image: -moz-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-    background-image: -webkit-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-    background-image: -ms-linear-gradient(bottom, rgb(0,26,22) 0%, rgb(21,84,94) 88%);
-
-    background-color: #033;
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0, rgb(0,26,22)),
-        color-stop(0.88, rgb(21,84,94))
-    );
-    color: white;
-    margin:0 0 10px 0;
-    padding: 1em;
-    box-shadow: 0 1px 3px 3px #000;
-}
-
-table {
-    border: 1px dotted #000;
-    border-collapse: collapse;
-}
-td, th {
-    border: 1px dotted #000;
-    padding: 0.5em;
-}</style>
-<body class="claro">
-<a href="https://github.com/hirak/php-XML_Builder"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a><h1>php-XML_Builder</h1>
-<div id="wrapper"><div style="position:relative;"><div data-dojo-type="dijit.layout.TabContainer" doLayout="false" style="position:static;">
-<div data-dojo-type="dijit.layout.ContentPane" title="Introduction">
-<h2>About</h2>
-<table><tr>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">&lt;?php
+<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><title>php-XML_Builder document</title>
+<link rel="stylesheet" href="assets/bootstrap.min.css">
+<link rel="stylesheet" href="assets/prettify.css">
+</head>
+<body style="padding-top:90px;">
+<a href="https://github.com/hirak/php-XML_Builder"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:2000;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a><div class="navbar navbar-fixed-top"><div class="navbar-inner"><nav class="container"><h1 class="brand">XML Builder</h1>
+<ul class="nav">
+<li><a href="#">Introduction</a></li>
+<li><a href="#">Grammer</a></li>
+<li><a href="#">Backends</a></li>
+<li><a href="#">XML ⇔ Array</a></li>
+</ul></nav></div></div>
+<div class="container">
+<header class="hero-unit"><img src="assets/xml-builder-logo.png" style="display:block;float:right;margin-top:-25px;"><h1>php-XML_Builder</h1>
+<p>Most simple DSL for DOM / XMLWriter @ PHP</p>
+<a class="btn btn-primary btn-large" href="#">Download</a> <a class="btn btn-large" href="#">Source Code</a></header><section id="introduction"><div class="page-header"><h1>Introduction <small>about XML_Builder</small>
+</h1></div>
+<div class="row">
+<div class="span5"><pre class="prettyprint">&lt;?php
 require_once 'XML/Builder.php';
-XML_Builder::factory()
-
+echo XML_Builder::factory()
 -&gt;root
     -&gt;hello_('world')
--&gt;_
-
--&gt;_echo;</code></pre></td>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+-&gt;_;</pre></div>
+<div class="span2" style="text-align:center; font-size:74px">
+<br><br>=</div>
+<div class="span5"><pre class="prettyprint">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;root&gt;
   &lt;hello&gt;world&lt;/hello&gt;
-&lt;/root&gt;</code></pre></td>
-</tr></table>
+&lt;/root&gt;</pre></div>
+</div>
 <p>PHPでXMLを組み立てるためのライブラリです。</p>
-<ul>
-<li>
-<strong>簡潔</strong>: とにかく短く書けます。</li>
-<li>
-<strong>安全</strong>: DOMやXMLWriterといった実績のあるライブラリのラッパーとして動作します。そのためXSSのような不具合が原理的に発生しません。</li>
-<li>
-<strong>DOMとXMLWriterをサポート</strong>: バックエンドとして、高機能なDOM・高速なXMLWriterのいずれかを選択できます。どちらを選んでも同じインターフェースで書けます。</li>
-<li>
-<strong>Arrayサポート</strong>: おまけ機能として、同一インターフェースで配列を組み立てる機能があります。JSON/XML/PHPSerializeの出し分けが簡単に行えます。</li>
-</ul>
+<div class="row">
+<div class="span4">
+<h2>Feature</h2>
+<dl>
+<dt>Easy</dt>
+<dd>とにかく短く書けます。</dd>
+<dt>Safe</dt>
+<dd>DOMやXMLWriterといった実績のあるライブラリのラッパーとして動作します。そのためXSSのような不具合が原理的に発生しません。</dd>
+<dt>DOM and XMLWriter supported</dt>
+<dd>バックエンドとして、高機能なDOM・高速なXMLWriterのいずれかを選択できます。どちらを選んでも同じインターフェースで書けます。</dd>
+<dt>to Array</dt>
+<dd>おまけ機能として、同一インターフェースで配列を組み立てる機能があります。XML/JSON/YAML/PHPSerializeの出し分けが簡単に行えます。</dd>
+</dl>
+</div>
+<div class="span4"><p style="background-color:black">abc</p></div>
+<div class="span4"><p style="background-color:black">abc</p></div>
+</div></section><div id="wrapper"><div><div>
+<div>
 <hr>
 <h2>Install</h2>
 <p>PEARパッケージ形式で<a href="http://openpear.org/package/XML_Builder">Openpear</a>に登録してあるため、pearコマンドで簡単にインストールできます。</p>
-<pre><code>    # pear channel-discover openpear.org
-    # pear install openpear/XML_Builder</code></pre>
+<pre>    # pear channel-discover openpear.org
+    # pear install openpear/XML_Builder</pre>
 <p>pearコマンドが使えない環境では、<a href="https://github.com/hirak/php-XML_Builder">github</a>からソースをダウンロードして、include_pathにlibの中身をコピーすればOK。</p>
 <p>なお、このページ自体もXML_Builderを使って書いています。ソースは<a href="https://github.com/hirak/hirak.github.com/blob/master/xmlbuilder/src/index.html.php">src/index.html.php</a>から参照できます。</p>
 </div>
-<div data-dojo-type="dijit.layout.ContentPane" title="API Reference">
+<div>
 <h2>XML_Builder::factory()</h2>
 <p>XML_Builderオブジェクトを生成します。引数は配列で渡します。</p>
 <table>
@@ -131,10 +111,10 @@ XML_Builder::factory()
 </tbody>
 </table>
 <p>このXML_Builder::factory()でビルダーオブジェクトを作り、以下のメソッドをメソッドチェーンでつなげて書いていきます。</p>
-<table><tr><td><pre><code data-dojo-type="dojox.highlight.Code" class="php">$builder = XML_Builder::factory(array(
+<table><tr><td><pre class="prettyprint">$builder = XML_Builder::factory(array(
     'class' =&gt; 'dom',
     'doctype' =&gt; XML_Builder::$HTML4_STRICT,
-));</code></pre></td></tr></table>
+));</pre></td></tr></table>
 <hr>
 <h2>Methods</h2>
 <ul>
@@ -144,45 +124,45 @@ XML_Builder::factory()
 <h3>-&gt;xmlElem($name), -&gt;$name</h3>
 <p>$nameという名前の要素を作成して現在編集中の要素に追加します。戻り値は作成した要素になります。</p>
 <table><tr>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">//以下はすべて同じ意味
+<td><pre class="prettyprint">//以下はすべて同じ意味
 -&gt;root
 -&gt;root()
--&gt;xmlElem('root')</code></pre></td>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root&gt;</code></pre></td>
+-&gt;xmlElem('root')</pre></td>
+<td><pre class="prettyprint">&lt;root&gt;</pre></td>
 </tr></table>
 <p>名前空間付きの要素や、記号を含む要素の場合は{'〜'}で囲う必要があります。</p>
 <table><tr>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">//以下はすべて同じ意味
+<td><pre class="prettyprint">//以下はすべて同じ意味
 -&gt;{'atom:feed'}
 -&gt;{'atom:feed'}()
--&gt;xmlElem('atom:feed')</code></pre></td>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;atom:feed&gt;</code></pre></td>
+-&gt;xmlElem('atom:feed')</pre></td>
+<td><pre class="prettyprint">&lt;atom:feed&gt;</pre></td>
 </tr></table>
 <hr>
 <h3>-&gt;xmlEnd(), -&gt;_</h3>
 <p>現在の要素の編集を終え、親の要素に戻ります。</p>
 <table><tr>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">-&gt;root
--&gt;_</code></pre></td>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root/&gt;</code></pre></td>
+<td><pre class="prettyprint">-&gt;root
+-&gt;_</pre></td>
+<td><pre class="prettyprint">&lt;root/&gt;</pre></td>
 </tr></table>
 <hr>
 <h3>-&gt;xmlAttr(), -&gt;_attr()</h3>
 <p>現在編集中の要素に属性を追加します。配列で渡します。</p>
 <table><tr>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">-&gt;root
+<td><pre class="prettyprint">-&gt;root
     -&gt;_attr(array('moge'=&gt;'fuga','noge'=&gt;'guga'))
--&gt;_</code></pre></td>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root moge="fuga" noge="guga"/&gt;</code></pre></td>
+-&gt;_</pre></td>
+<td><pre class="prettyprint">&lt;root moge="fuga" noge="guga"/&gt;</pre></td>
 </tr></table>
 <hr>
 <h3>-&gt;xmlText(), -&gt;_text()</h3>
 <p>現在編集中の要素にテキストノードを追加します。</p>
 <table><tr>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">-&gt;root
+<td><pre class="prettyprint">-&gt;root
     -&gt;_text('hogehoge')
--&gt;_</code></pre></td>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root&gt;hogehoge&lt;/root&gt;</code></pre></td>
+-&gt;_</pre></td>
+<td><pre class="prettyprint">&lt;root&gt;hogehoge&lt;/root&gt;</pre></td>
 </tr></table>
 <hr>
 <h3>-&gt;$name_(array(), "string")</h3>
@@ -190,7 +170,7 @@ XML_Builder::factory()
 <p>"_"で終わるように要素名を書くと、その要素の編集を終了します。-&gt;xmlEnd()をすぐに呼んだのと同じ効果です。</p>
 <p>属性や単純なテキストノードであれば、要素の引数として渡すことでも追加できます。</p>
 <table><tr>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="php">//--同じ意味-----
+<td><pre class="prettyprint">//--同じ意味-----
 -&gt;root
     -&gt;_attr(array('aaa'=&gt;'bbb'))
     -&gt;_text('hogehoge')
@@ -201,11 +181,11 @@ XML_Builder::factory()
 //--混ざっていてもOK------
 -&gt;root(array('aaa'=&gt;'bbb'))
     -&gt;_text('hogehoge')
--&gt;_</code></pre></td>
-<td><pre><code data-dojo-type="dojox.highlight.Code" class="xml">&lt;root aaa="bbb"&gt;hogehoge&lt;/root&gt;</code></pre></td>
+-&gt;_</pre></td>
+<td><pre class="prettyprint">&lt;root aaa="bbb"&gt;hogehoge&lt;/root&gt;</pre></td>
 </tr></table>
 </div>
-<div data-dojo-type="dijit.layout.ContentPane" title="DOM">
+<div>
 <h2>XML_Builder_DOM</h2>
 <p>ここではDOMバックエンド特有の機能を紹介します。</p>
 <hr>
@@ -216,7 +196,7 @@ XML_Builder::factory()
 <h3>-&gt;xmlEcho($type="xml")</h3>
 <p>出力を行います。引数にhtmlという文字列を渡すと、DOMによるHTML出力を試みます。</p>
 </div>
-<div data-dojo-type="dijit.layout.ContentPane" title="XMLWriter">
+<div>
 <h2>XML_Builder_XMLWriter</h2>
 <p>ここではXMLWriterバックエンド特有の機能を紹介します。</p>
 <hr>
@@ -224,7 +204,7 @@ XML_Builder::factory()
 <h3>-&gt;xmlWriter</h3>
 <p>XMLWriterオブジェクトが格納されています。</p>
 </div>
-<div data-dojo-type="dijit.layout.ContentPane" title="Array">
+<div>
 <h2>XML_Builder_Array</h2>
 <p>ここではArrayバックエンド特有の機能を紹介します。</p>
 <hr>
@@ -233,12 +213,7 @@ XML_Builder::factory()
 <p>構築された入れ子の配列が格納されています。</p>
 </div>
 </div></div></div>
-<script src="assets/dojo/dojo.js" type="text/javascript" data-dojo-config="parseOnLoad:true"></script><script type="text/javascript"><!--
-dojo.require("dijit.layout.TabContainer");
-dojo.require("dijit.layout.ContentPane");
-dojo.require("dojox.highlight");
-dojo.require("dojox.highlight.languages.php");
-dojo.require("dojox.highlight.languages.xml");
---></script>
+</div>
+<script src="assets/jquery-1.8.0.min.js"></script><script src="assets/prettify.js"></script><script src="assets/bootstrap-scrollspy.js"></script><script src="assets/bootstrap-dropdown.js"></script><script>prettyPrint()</script>
 </body>
-</head></html>
+</html>
