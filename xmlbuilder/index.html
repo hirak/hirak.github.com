@@ -11,15 +11,15 @@
 <body style="padding-top:90px;">
 <a href="https://github.com/hirak/php-XML_Builder"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:2000;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a><div class="navbar navbar-fixed-top"><div class="navbar-inner"><nav class="container"><h1 class="brand">XML Builder</h1>
 <ul class="nav">
-<li><a href="#">Introduction</a></li>
-<li><a href="#">Grammer</a></li>
-<li><a href="#">Backends</a></li>
-<li><a href="#">XML ⇔ Array</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#grammer">Grammer</a></li>
+<li><a href="#backends">Backends</a></li>
+<li><a href="#translate">XML ⇔ Array</a></li>
 </ul></nav></div></div>
 <div class="container">
 <header class="hero-unit"><img src="assets/xml-builder-logo.png" style="display:block;float:right;margin-top:-25px;"><h1>php-XML_Builder</h1>
 <p>Most simple DSL for DOM / XMLWriter @ PHP</p>
-<a class="btn btn-primary btn-large" href="#">Download</a> <a class="btn btn-large" href="#">Source Code</a></header><section id="introduction"><div class="page-header"><h1>Introduction <small>about XML_Builder</small>
+<a class="btn btn-primary btn-large" href="https://github.com/hirak/php-XML_Builder">Download</a> <a class="btn btn-large" href="https://github.com/hirak/php-XML_Builder">Source Code</a></header><section id="introduction"><div class="page-header"><h1>Introduction <small>about XML_Builder</small>
 </h1></div>
 <div class="row">
 <div class="span5"><pre class="prettyprint">&lt;?php
@@ -50,27 +50,25 @@ echo XML_Builder::factory()
 <dd>おまけ機能として、同一インターフェースで配列を組み立てる機能があります。XML/JSON/YAML/PHPSerializeの出し分けが簡単に行えます。</dd>
 </dl>
 </div>
-<div class="span4"><p style="background-color:black">abc</p></div>
-<div class="span4"><p style="background-color:black">abc</p></div>
-</div></section><div id="wrapper"><div><div>
-<div>
-<hr>
+<div class="span8">
 <h2>Install</h2>
+<h3>from Openpear</h3>
 <p>PEARパッケージ形式で<a href="http://openpear.org/package/XML_Builder">Openpear</a>に登録してあるため、pearコマンドで簡単にインストールできます。</p>
 <pre>    # pear channel-discover openpear.org
     # pear install openpear/XML_Builder</pre>
 <p>pearコマンドが使えない環境では、<a href="https://github.com/hirak/php-XML_Builder">github</a>からソースをダウンロードして、include_pathにlibの中身をコピーすればOK。</p>
 <p>なお、このページ自体もXML_Builderを使って書いています。ソースは<a href="https://github.com/hirak/hirak.github.com/blob/master/xmlbuilder/src/index.html.php">src/index.html.php</a>から参照できます。</p>
 </div>
+</div></section><section id="grammer"><div class="page-header"><h1>Grammer</h1></div>
 <div>
 <h2>XML_Builder::factory()</h2>
 <p>XML_Builderオブジェクトを生成します。引数は配列で渡します。</p>
-<table>
-<caption>オプション説明</caption>
+<table class="table table-bordered">
+<caption>options</caption>
 <thead><tr>
-<th>オプション名</th>
-<th>デフォルト</th>
-<th>説明</th>
+<th>name</th>
+<th>default value</th>
+<th>description</th>
 </tr></thead>
 <tbody>
 <tr>
@@ -110,12 +108,11 @@ echo XML_Builder::factory()
 </tr>
 </tbody>
 </table>
-<p>このXML_Builder::factory()でビルダーオブジェクトを作り、以下のメソッドをメソッドチェーンでつなげて書いていきます。</p>
-<table><tr><td><pre class="prettyprint">$builder = XML_Builder::factory(array(
+<p>このXML_Builder::factory()でビルダーオブジェクトを作り、以下のmethodをmethod chainでつなげて書いていきます。</p>
+<pre class="prettyprint">$builder = XML_Builder::factory(array(
     'class' =&gt; 'dom',
     'doctype' =&gt; XML_Builder::$HTML4_STRICT,
-));</pre></td></tr></table>
-<hr>
+));</pre>
 <h2>Methods</h2>
 <ul>
 <li>引数がない場合は()を省略することができます。</li>
@@ -123,7 +120,7 @@ echo XML_Builder::factory()
 </ul>
 <h3>-&gt;xmlElem($name), -&gt;$name</h3>
 <p>$nameという名前の要素を作成して現在編集中の要素に追加します。戻り値は作成した要素になります。</p>
-<table><tr>
+<table class="table"><tr>
 <td><pre class="prettyprint">//以下はすべて同じ意味
 -&gt;root
 -&gt;root()
@@ -131,14 +128,15 @@ echo XML_Builder::factory()
 <td><pre class="prettyprint">&lt;root&gt;</pre></td>
 </tr></table>
 <p>名前空間付きの要素や、記号を含む要素の場合は{'〜'}で囲う必要があります。</p>
-<table><tr>
+<table class="table"><tr>
 <td><pre class="prettyprint">//以下はすべて同じ意味
 -&gt;{'atom:feed'}
 -&gt;{'atom:feed'}()
 -&gt;xmlElem('atom:feed')</pre></td>
 <td><pre class="prettyprint">&lt;atom:feed&gt;</pre></td>
 </tr></table>
-<hr>
+</div></section><div id="wrapper"><div><div>
+<div>
 <h3>-&gt;xmlEnd(), -&gt;_</h3>
 <p>現在の要素の編集を終え、親の要素に戻ります。</p>
 <table><tr>
